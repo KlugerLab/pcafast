@@ -35,7 +35,7 @@ for m = [100 200]
 
 
               [U,S1,V] = svd(full(Ac),'econ');
-              [U,S2,V] = adaptivepca(A,1.0d-10,b,P);
+              [U,S2,V] = adaptivepca(A,1.0d-7,b,P);
 
 
               S3 = zeros(min(m,n));
@@ -56,10 +56,10 @@ end
 
 
 
-if(all(err./bests<10 | err<1d-10))
+if(all(err./bests<10 | err<1d-7))
   disp('All tests succeeded.');
 end
 
-if(~all(err./bests<10 | err<1d-10))
+if(~all(err./bests<10 | err<1d-7))
   error('A test failed.');
 end
