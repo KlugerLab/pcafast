@@ -9,16 +9,16 @@ examples.m: Provides some example usages
 
 alltests.m: Runs all tests listed below 
 PCAfasttest.m: tests PCAfast.m for dense matrices
-PCAfasttests.m: tests PCAfast.m for sparse matrices
+PCAfasttestsparse.m: tests PCAfast.m for sparse matrices
 eigenstest.m: tests eigen on dense self-adjoint matrices
-eigenstests.m: tests eigen on sparse self-adjoint matrices
+eigenstestsparse.m: tests eigen on sparse self-adjoint matrices
 eigenntest.m: tests eigen on dense non-negative definite matrices
-eigenntests.m: tests eigen on sparse non-negative definite matrices
+eigenntestsparse.m: tests eigen on sparse non-negative definite matrices
 diffsnormtest.m: tests diffsnorm on dense matrices
-diffsnormtests.m: tests diffsnorm on sparse matrices
+diffsnormtestsparse.m: tests diffsnorm on sparse matrices
 diffsnormschurtest.m: tests diffsnormschur on dense matrices
-diffsnormstests.m: tests diffsnormschur on sparse matrices
+diffsnormschurtestsparse.m: tests diffsnormschur on sparse matrices
 diffsnormctest.m: tests diffsnorm with centering on dense matrices
-diffsnormctests.m: tests diffsnorm with centering on sparse matrices
+diffsnormctestsparse.m: tests diffsnorm with centering on sparse matrices
 adaptivepcatest.m: tests adaptivepca.m for dense matrices
-adaptivepcatests.m: tests adaptivepca.m for sparse matrices
+adaptivepcatestsparse.m: tests adaptivepca.m for sparse matrices
