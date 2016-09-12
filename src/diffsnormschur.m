@@ -1,13 +1,13 @@
-function snorm = diffsnorms(A,V,T,its)
-%DIFFSNORMS  2-norm accuracy of a Schur decomp. of a matrix
+function snorm = diffsnormschur(A,V,T,its)
+%DIFFSNORMSCHUR  2-norm accuracy of a Schur decomp. of a matrix
 %
 %
-%   snorm = DIFFSNORMS(A,V,T)  computes an estimate snorm of the
+%   snorm = DIFFSNORMSCHUR(A,V,T)  computes an estimate snorm of the
 %           spectral norm (the operator norm induced by the Euclidean
 %           vector norm) of A-VTV', using 20 iterations of the power
 %           method started with a random vector.
 %
-%   snorm = DIFFSNORMS(A,V,T,its)  finds an estimate snorm of the
+%   snorm = DIFFSNORMSCHUR(A,V,T,its)  finds an estimate snorm of the
 %           spectral norm (the operator norm induced by the Euclidean
 %           vector norm) of A-VTV', using its iterations of the power
 %           method started with a random vector; its must be a positive
@@ -18,7 +18,7 @@ function snorm = diffsnorms(A,V,T,its)
 %   spectral norm of A-VTV'.
 %
 %
-%   Note: DIFFSNORMS invokes RANDN. To obtain repeatable results, reset
+%   Note: DIFFSNORMSCHUR invokes RANDN. To obtain repeatable results, reset
 %         the seed for the pseudorandom number generator.
 %
 %
@@ -40,12 +40,12 @@ function snorm = diffsnorms(A,V,T,its)
 %     A = A*A';
 %     A = A/normest(A);
 %     [V,D] = eigen(A,2, 4, 4, true);
-%     diffsnorms(A,V,D)
+%     diffsnormschur(A,V,D)
 %
 %     This example produces a rank-2 approximation VDV' to A such that
 %     the columns of V are orthonormal and D is a diagonal matrix whose
 %     diagonal entries are nonnegative and nonincreasing.
-%     diffsnorms(A,V,D) outputs an estimate of the spectral norm of
+%     diffsnormschur(A,V,D) outputs an estimate of the spectral norm of
 %     A-VDV', which should be close to the machine precision.
 %
 %
@@ -73,12 +73,12 @@ function snorm = diffsnorms(A,V,T,its)
 % Check the number of inputs.
 %
 if(nargin < 3)
-  error('MATLAB:diffsnorms:TooFewIn',...
+  error('MATLAB:diffsnormschur:TooFewIn',...
         'There must be at least 3 inputs.')
 end
 
 if(nargin > 4)
-  error('MATLAB:diffsnorms:TooManyIn',...
+  error('MATLAB:diffsnormschur:TooManyIn',...
         'There must be at most 4 inputs.')
 end
 
@@ -86,7 +86,7 @@ end
 % Check the number of outputs.
 %
 if(nargout > 1)
-  error('MATLAB:diffsnorms:TooManyOut',...
+  error('MATLAB:diffsnormschur:TooManyOut',...
         'There must be at most 1 output.')
 end
 
@@ -101,37 +101,37 @@ end
 % Check the input arguments.
 %
 if(~isfloat(A))
-  error('MATLAB:diffsnorms:In1NotFloat',...
+  error('MATLAB:diffsnormschur:In1NotFloat',...
         'Input 1 must be a floating-point matrix.')
 end
 
 if(isempty(A))
-  error('MATLAB:diffsnorms:In1Empty',...
+  error('MATLAB:diffsnormschur:In1Empty',...
         'Input 1 must not be empty.')
 end
 
 if(~isfloat(V))
-  error('MATLAB:diffsnorms:In2NotFloat',...
+  error('MATLAB:diffsnormschur:In2NotFloat',...
         'Input 2 must be a floating-point matrix.')
 end
 
 if(~isfloat(T))
-  error('MATLAB:diffsnorms:In3NotFloat',...
+  error('MATLAB:diffsnormschur:In3NotFloat',...
         'Input 3 must be a floating-point matrix.')
 end
 
 if(isempty(T))
-  error('MATLAB:diffsnorms:In3Empty',...
+  error('MATLAB:diffsnormschur:In3Empty',...
         'Input 3 must not be empty.')
 end
 
 if(~isscalar(its))
-  error('MATLAB:diffsnorms:In4Not1x1',...
+  error('MATLAB:diffsnormschur:In4Not1x1',...
         'Input 4 must be a scalar.')
 end
 
 if(~(its > 0))
-  error('MATLAB:diffsnorms:In4NonPos',...
+  error('MATLAB:diffsnormschur:In4NonPos',...
         'Input 4 must be > 0.')
 end
 
@@ -146,22 +146,22 @@ end
 % Make sure that the dimensions of A, V, and T are commensurate.
 %
 if(m ~= n)
-  error('MATLAB:diffsnorms:In1BadDim',...
+  error('MATLAB:diffsnormschur:In1BadDim',...
         'Input 1 must be square.')
 end
 
 if(m ~= m2)
-  error('MATLAB:diffsnorms:In1In2BadDim',...
+  error('MATLAB:diffsnormschur:In1In2BadDim',...
         'The 1st dims. of Inputs 1 and 2 must be equal.')
 end
 
 if(k ~= k2)
-  error('MATLAB:diffsnorms:In2In3BadDim',...
+  error('MATLAB:diffsnormschur:In2In3BadDim',...
         'The 2nd dim. of Input 2 must equal the 1st dim. of Input 3.')
 end
 
 if(k2 ~= k3)
-  error('MATLAB:diffsnorms:In3BadDim',...
+  error('MATLAB:diffsnormschur:In3BadDim',...
         'Input 3 must be square.')
 end
 

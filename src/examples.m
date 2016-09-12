@@ -52,8 +52,8 @@ A = V*diag(d)*V';
 % Check the accuracies of the approximations.
 %
 its = 1000;
-errn = diffsnorms(A,V1,D1,its)
-errs = diffsnorms(A,V2,D2,its)
+errn = diffsnormschur(A,V1,D1,its)
+errs = diffsnormschur(A,V2,D2,its)
 erra = diffsnorm(A,V3,D3,V3,its)
 
 if(errn > 100*best)

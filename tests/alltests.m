@@ -2,19 +2,19 @@ clear
 diffsnormtest
 
 clear
-diffsnormtests
+diffsnormtestschur
 
 clear
 diffsnormctest
 
 clear
-diffsnormctests
+diffsnormctestsparse
 
 clear
-diffsnormstest
+diffsnormschurtest
 
 clear
-diffsnormstests
+diffsnormschurtestsparse
 
 fprintf('\n\n')
 clear
@@ -22,7 +22,7 @@ eigenntest
 
 fprintf('\n\n')
 clear
-eigenntests
+eigenntestsparse
 
 fprintf('\n\n')
 clear
@@ -30,15 +30,15 @@ eigenstest
 
 fprintf('\n\n')
 clear
-eigenstests
+eigenstestsparse
 
 fprintf('\n\n')
 clear
-PCAfasttest
+pcafasttest
 
 fprintf('\n\n')
 clear
-PCAfasttests
+pcafasttestsparse
 
 fprintf('\n\n')
 clear
@@ -46,7 +46,4 @@ adaptivepcatest
 
 fprintf('\n\n')
 clear
-
-fprintf('\n\n')
-adaptivepcatest
-adaptivepcatests
+adaptivepcatestsparse

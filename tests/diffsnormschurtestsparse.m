@@ -1,5 +1,5 @@
 %
-% This script tests diffsnorms on sparse matrices.
+% This script tests diffsnormschur on sparse matrices.
 %
 addpath('../src')
 
@@ -23,7 +23,7 @@ for n = [100 200]
 
     [U,S,V] = svd(full(A),'econ');
     T = S*V'*U;
-    snorm = diffsnorms(A,U,T);
+    snorm = diffsnormschur(A,U,T);
     pass = [pass snorm<.1d-10*S(1,1)];
 
   end

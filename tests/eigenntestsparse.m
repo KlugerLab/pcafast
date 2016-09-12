@@ -52,7 +52,7 @@ for n = [100 200]
         errs = [errs norm(diag(D1)-diag(D3))];
 
 
-        err = [err diffsnorms(A,V,D2)];
+        err = [err diffsnormschur(A,V,D2)];
 
 
         bests = [bests abs(D1(k+1,k+1))];

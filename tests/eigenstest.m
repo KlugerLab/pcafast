@@ -49,7 +49,7 @@ for n = [10 20]
         errs = [errs norm(diag(D1)-diag(D3))];
 
 
-        err = [err diffsnorms(A,V,D2)];
+        err = [err diffsnormschur(A,V,D2)];
 
 
       end

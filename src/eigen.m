@@ -91,13 +91,13 @@ function [varargout] = eigen(A,k,its, l, nnd_flag)
 %     A = A*A';
 %     A = A/normest(A);
 %     [V,D] = eigen(A,2);
-%     diffsnorms(A,V,D)
+%     diffsnormschur(A,V,D)
 %
 %     This example produces a rank-2 approximation VDV' to A such that
 %     the columns of V are orthonormal and D is a diagonal matrix whose
 %     diagonal entries are real and their absolute nonincreasing.  If
 %     nnd_flag is specified, then the diagonal entries are also non-negative.
-%     diffsnorms(A,V,D) outputs an estimate of the spectral norm of
+%     diffsnormschur(A,V,D) outputs an estimate of the spectral norm of
 %     A-VDV', which should be close to the machine precision.
 %
 %

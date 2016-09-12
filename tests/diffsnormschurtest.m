@@ -1,5 +1,5 @@
 %
-% This script tests diffsnorms on dense matrices.
+% This script tests diffsnormschur on dense matrices.
 %
 addpath('../src')
 
@@ -17,7 +17,7 @@ for n = [100 200]
 
     [U,S,V] = svd(A,'econ');
     T = S*V'*U;
-    snorm = diffsnorms(A,U,T);
+    snorm = diffsnormschur(A,U,T);
     pass = [pass snorm<.1d-10*S(1,1)];
 
   end
