@@ -243,7 +243,6 @@ else
     Q = A*R - ones(m,1)*(c*R);
 end
 
-clear R;
 %   Form a matrix Q whose columns constitute a well-conditioned basis
 %   for the columns of the earlier Q.
 if(its == 0)
@@ -295,7 +294,6 @@ else
     %   the left singular vectors of A.
     U = Q*R;
 end
-clear Q R;
 
 %   Retain only the leftmost k columns of U,
 %   the leftmost k columns of V,

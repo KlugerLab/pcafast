@@ -246,7 +246,6 @@ if(l >= n/1.25)
     D = diag(real(D(P)));
     V = V(:,P);
     
-    clear E P;
     
     %
     % Retain only the leftmost k columns of V and
@@ -328,7 +327,6 @@ for it = 1:its
     
 end
 
-clear E;
 
 %
 % Use the Nystrom method to obtain approximations to the eigenvalues
@@ -356,9 +354,7 @@ else
     D = diag(D);
     D = diag(real(D(P)));
     V = V(:,P);
-    clear P
 end
-clear Q R E;
 
 %
 % Retain only the leftmost k columns of V and

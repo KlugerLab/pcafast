@@ -272,4 +272,3 @@ end
 
 snorm = sqrt(snorm);
 
-clear x y;

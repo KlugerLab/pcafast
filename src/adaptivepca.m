@@ -202,7 +202,6 @@ else
     % the left singular vectors of A.
     U = Q*R;
 end
-clear Q R
 
 % Retain only the leftmost k columns of U,
 % the leftmost k columns of V,
