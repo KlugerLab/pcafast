@@ -46,7 +46,7 @@ A = V*diag(d)*V';
 %
 [V1,D1] = eigen(A,k,4,k+2,true);
 [V2,D2] = eigen(A,k);
-[U,D3,V3] = PCAfast(A,k,true);
+[U,D3,V3] = pcafast(A,k,true);
 
 %
 % Check the accuracies of the approximations.
@@ -65,3 +65,4 @@ end
 if(erra > 100*best)
   error('erra is too big.');
 end
+

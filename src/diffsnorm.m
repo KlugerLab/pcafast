@@ -181,12 +181,15 @@ if(n ~= n2)
         'The 2nd dim. of Input 1 must equal the 1st dim. of Input 4.')
 end
 
-if(raw)
+if raw
     % Do not normalize
-    c = zeros(1,n);
+    applyA = @(X) A*X;
+    applyAT = @(X) A'*X;
 else
     % Normalize by the average of the entries in every column.
-    c = sum(A)/m;
+    c = mean(A,1);
+    applyA = @(X) bsxfun(@minus,A*X,c*X);
+    applyAT = @(X) A'*X-c'*sum(X,1);
 end
 
 if(m >= n)
@@ -207,15 +210,16 @@ if(m >= n)
         y = V'*x;
         y = S*y;
         y = U*y;
-        y = A*x-ones(m,1)*(c*x)-y;
+        y = applyA(x) -y;
+       % y = A*x-ones(m,1)*(c*x)-y;
         %
         %   Set x = (A'-c'*ones(1,m)-VS'U')y.
         %
         x = U'*y;
         x = S'*x;
         x = V*x;
-        x = A'*y-c'*(ones(1,m)*y)-x;
-        
+        %x = A'*y-c'*(ones(1,m)*y)-x;
+        x = applyAT(y) -x;
         %
         %   Normalize x, memorizing its Euclidean norm.
         %
@@ -248,7 +252,8 @@ if(m < n)
         x = y*U;
         x = x*S;
         x = x*V';
-        x = y*A-(y*ones(m,1))*c-x;
+        %x = y*A-(y*ones(m,1))*c-x;
+        x = applyAT(y')' - x;
         
         %
         %   Set y = x(A'-c'*ones(1,m)-VS'U').
@@ -256,7 +261,8 @@ if(m < n)
         y = x*V;
         y = y*S';
         y = y*U';
-        y = x*A' - (x*c')*ones(1,m) - y;
+        %y = x*A' - (x*c')*ones(1,m) - y;
+        y = applyA(x')' - y;
         
         %
         %   Normalize y, memorizing its Euclidean norm.

@@ -212,17 +212,24 @@ if(l < k)
         'Input 5 must be >= Input 2.')
 end
 
-if(raw)
+if raw
     % Do not normalize
-    c = zeros(1,n);
+    applyA = @(X) A*X;
+    applyAT = @(X) A'*X;
 else
     % Normalize by the average of the entries in every column.
-    c = sum(A)/m;
+    c = mean(A,1);
+    applyA = @(X) bsxfun(@minus,A*X,c*X);
+    applyAT = @(X) A'*X-c'*sum(X,1);
 end
 
 % SVD the centered A directly if l >= m/1.25 or l >= n/1.25.
 if((l >= m/1.25) || (l >= n/1.25))
-    [U,S,V] = svd(full(A)-ones(m,1)*c,'econ');
+    if raw
+        [U,S,V] = svd(full(A),'econ');
+    else
+        [U,S,V] = svd(full(A)-ones(m,1)*c,'econ');
+    end
     %   Retain only the leftmost k columns of U,
     %   the leftmost k columns of V, and the
     %   uppermost leftmost k x k block of S.
@@ -236,11 +243,13 @@ end
 if (m<n)
     R = 2*rand(l,m)-1 + ~isreal(A)*1i*(2*rand(l,m)-1);
     %   Apply the adjoint of A to a random matrix, obtaining Q.
-    Q = A'*R' - c'*(ones(1,m)*R');
+    %Q = A'*R' - c'*(ones(1,m)*R');
+    Q = applyAT(R');
 else
     R = 2*rand(n,l)-1 + ~isreal(A)*1i*(2*rand(n,l)-1);
     %   Apply A to a random matrix, obtaining Q.
-    Q = A*R - ones(m,1)*(c*R);
+    %Q = A*R - ones(m,1)*(c*R);
+    Q = applyA(R);
 end
 
 %   Form a matrix Q whose columns constitute a well-conditioned basis
@@ -255,10 +264,12 @@ end
 if (m<n)
     %   Conduct normalized power iterations.
     for it = 1:its
-        Q = bsxfun(@minus,A*Q,c*Q);
+        Q = applyA(Q);
+        %Q = bsxfun(@minus,A*Q,c*Q);
         %Q = A*Q - ones(m,1)*(c*Q);
         [Q,~] = lu(Q);
-        Q = A'*Q - c'*(ones(1,m)*Q);
+        %Q = A'*Q - c'*(ones(1,m)*Q);
+        Q = applyAT(Q);
         if(it < its)
             [Q,~] = lu(Q);
         else
@@ -268,16 +279,19 @@ if (m<n)
     
     %   SVD the A applied to Q to obtain approximations
     %   to the singular values and left singular vectors of the A;
-    [U,S,R] = svd(A*Q - ones(m,1)*(c*Q),'econ');
+    %[U,S,R] = svd(A*Q - ones(m,1)*(c*Q),'econ');
+    [U,S,R] = svd(applyA(Q),'econ');
     %   Adjust the right singular vectors to approximate
     %   the right singular vectors of A.
     V = Q*R;
 else
     %   Conduct normalized power iterations.
     for it = 1:its
-        Q = A'*Q - c'*(ones(1,m)*Q);
+        %Q = A'*Q - c'*(ones(1,m)*Q);
+        Q = applyAT(Q);
         [Q,~] = lu(Q);
-        Q = bsxfun(@minus,A*Q,c*Q); 
+        Q = applyA(Q);
+        %Q = bsxfun(@minus,A*Q,c*Q); 
         if(it < its)
             [Q,~] = lu(Q);
         else
@@ -288,7 +302,8 @@ else
     %   SVD Q' applied to the centered A to obtain approximations
     %   to the singular values and right singular vectors of the A;
     R = Q';
-    [R,S,V] = svd(R*A - (R*ones(m,1))*c,'econ');
+    %[R,S,V] = svd(R*A - (R*ones(m,1))*c,'econ');
+    [R,S,V] = svd(applyAT(R')','econ');
     
     %   Adjust the left singular vectors to approximate
     %   the left singular vectors of A.
