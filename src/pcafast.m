@@ -243,12 +243,10 @@ end
 if (m<n)
     R = 2*rand(l,m)-1 + ~isreal(A)*1i*(2*rand(l,m)-1);
     %   Apply the adjoint of A to a random matrix, obtaining Q.
-    %Q = A'*R' - c'*(ones(1,m)*R');
     Q = applyAT(R');
 else
     R = 2*rand(n,l)-1 + ~isreal(A)*1i*(2*rand(n,l)-1);
     %   Apply A to a random matrix, obtaining Q.
-    %Q = A*R - ones(m,1)*(c*R);
     Q = applyA(R);
 end
 
@@ -265,10 +263,7 @@ if (m<n)
     %   Conduct normalized power iterations.
     for it = 1:its
         Q = applyA(Q);
-        %Q = bsxfun(@minus,A*Q,c*Q);
-        %Q = A*Q - ones(m,1)*(c*Q);
         [Q,~] = lu(Q);
-        %Q = A'*Q - c'*(ones(1,m)*Q);
         Q = applyAT(Q);
         if(it < its)
             [Q,~] = lu(Q);
@@ -279,7 +274,6 @@ if (m<n)
     
     %   SVD the A applied to Q to obtain approximations
     %   to the singular values and left singular vectors of the A;
-    %[U,S,R] = svd(A*Q - ones(m,1)*(c*Q),'econ');
     [U,S,R] = svd(applyA(Q),'econ');
     %   Adjust the right singular vectors to approximate
     %   the right singular vectors of A.
@@ -287,11 +281,9 @@ if (m<n)
 else
     %   Conduct normalized power iterations.
     for it = 1:its
-        %Q = A'*Q - c'*(ones(1,m)*Q);
         Q = applyAT(Q);
         [Q,~] = lu(Q);
         Q = applyA(Q);
-        %Q = bsxfun(@minus,A*Q,c*Q); 
         if(it < its)
             [Q,~] = lu(Q);
         else
@@ -302,7 +294,6 @@ else
     %   SVD Q' applied to the centered A to obtain approximations
     %   to the singular values and right singular vectors of the A;
     R = Q';
-    %[R,S,V] = svd(R*A - (R*ones(m,1))*c,'econ');
     [R,S,V] = svd(applyAT(R')','econ');
     
     %   Adjust the left singular vectors to approximate

@@ -218,7 +218,6 @@ if(m >= n)
         x = U'*y;
         x = S'*x;
         x = V*x;
-        %x = A'*y-c'*(ones(1,m)*y)-x;
         x = applyAT(y) -x;
         %
         %   Normalize x, memorizing its Euclidean norm.
@@ -252,7 +251,6 @@ if(m < n)
         x = y*U;
         x = x*S;
         x = x*V';
-        %x = y*A-(y*ones(m,1))*c-x;
         x = applyAT(y')' - x;
         
         %
@@ -261,7 +259,6 @@ if(m < n)
         y = x*V;
         y = y*S';
         y = y*U';
-        %y = x*A' - (x*c')*ones(1,m) - y;
         y = applyA(x')' - y;
         
         %
