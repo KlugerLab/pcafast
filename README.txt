@@ -21,3 +21,8 @@ tests/diffsnormctest.m: tests diffsnorm with centering on dense matrices
 tests/diffsnormctestsparse.m: tests diffsnorm with centering on sparse matrices
 tests/adaptivepcatest.m: tests adaptivepca.m for dense matrices
 tests/adaptivepcatestsparse.m: tests adaptivepca.m for sparse matrices
+
+If you use this software, please cite:
+Huamin Li, George C. Linderman, Arthur Szlam, Kelly P. Stanton, Yuval Kluger, and Mark Tygert. 2017.
+Algorithm 971: An implementation of a randomized algorithm for principal component analysis. ACM Trans.
+Math. Softw. 43, 3, Article 28 (January 2017), 14 pages.
